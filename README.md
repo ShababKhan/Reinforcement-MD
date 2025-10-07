@@ -1,4 +1,4 @@
-# Reinforced Molecular Dynamics (rMD) Software
+# Reinforced Molecular Dynamics (rMD) Software Recreation
 
 ## 1. Project Overview
 
@@ -50,6 +50,24 @@ The rMD approach follows these key stages:
 *   `test_autoencoder_basic.py`: Verifies the structure and `predLoss` calculation of the basic AE.
 *   `test_train_autoencoder.py`: Tests the dummy data generation, DataLoader, and the training execution/saving mechanism.
 
+### 3.6. Data Handling, CV Extraction & FE Map Integration (Sprint 2 - Focus)
+
+This development phase focuses on establishing the capability to process real Molecular Dynamics (MD) simulation data, extract relevant Collective Variables (CVs), and handle Free Energy (FE) maps, which are foundational inputs for the rMD approach.
+
+*   **Simulated Data Processing Modules:**
+    *   **`data_processing/trajectory_loader.py`:** (Conceptual - to be implemented) This module will be responsible for reading MD trajectory files (e.g., PDB, DCD, XTC) and extracting atomic coordinates. It will leverage libraries like `MDAnalysis` for robust parsing and will include functionality for essential preprocessing steps such as aligning structures to a reference frame to remove global rotations and translations, as noted in the paper.
+    *   **`data_processing/cv_calculator.py`:** (Conceptual - to be implemented) This module will implement functions to calculate the specific Collective Variables (CVs) described in the paper. This involves identifying key protein domains (e.g., CRBN-NTD, CRBN-CTD), calculating their Centers of Mass (COM), and determining the distances/orientations that constitute the 3D CV space (as visualized in Figure S1).
+    *   **`data_processing/fe_map_handler.py`:** (Conceptual - to be implemented) This module will provide utilities for loading or approximating Free Energy (FE) maps. Given that generating FE maps requires substantial simulation resources, the initial implementation will likely focus on reading pre-computed FE map data from files (e.g., `.npy` grids). If direct FE data is unavailable, mechanisms to use the *distribution* of generated CVs as a proxy during training will be explored.
+
+*   **Integration into Training Data Pipeline:** These new data handling modules will be integrated into the existing PyTorch `Dataset` and `DataLoader` infrastructure. This ensures that the informed autoencoder training script (`train_informed_autoencoder.py`) can ingest data derived from actual (or simulated) MD trajectories and their corresponding CVs/FE maps.
+
+*   **Addressing `requirements.txt` Issue:**
+    We have encountered a persistent issue with reliably creating the `requirements.txt` file using the available tooling. For now, please manually ensure the dependencies listed in Section 5 (Installation) are installed in your environment. We will revisit this tool functionality.
+
+### Current Status
+
+The foundational autoencoder architecture, its training scripts, and utility functions for physics-informed loss calculation are complete and documented. The project is now poised to integrate with real MD simulation data, CV extraction, and FE map handling, marking the next significant step in replicating the rMD methodology.
+
 ## 4. Dependencies
 
 The project relies on Python and several key libraries. Please refer to `requirements.txt` for specific version requirements.
@@ -74,6 +92,7 @@ The project relies on Python and several key libraries. Please refer to `require
     ```bash
     pip install -r requirements.txt
     ```
+    *(Note: If `requirements.txt` creation fails, manually install packages listed in Section 4 based on your environment.)*
 
 ## 6. Usage
 
@@ -122,6 +141,12 @@ pytest
 # Trained models will be generated locally:
 # ├── basic_autoencoder_model.pth
 # └── informed_autoencoder_model.pth
+# Data processing modules (to be implemented):
+# ├── data_processing/
+# │   ├── __init__.py
+# │   ├── trajectory_loader.py
+# │   ├── cv_calculator.py
+# │   └── fe_map_handler.py
 ```
 
 ## 8. Future Work
