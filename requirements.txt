@@ -1,8 +1,0 @@
-numpy
-scipy
-torch # PyTorch, for deep learning
-MDAnalysis
-biopython
-matplotlib
-seaborn
-tqdm
