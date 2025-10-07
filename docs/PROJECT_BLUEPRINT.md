@@ -5,26 +5,26 @@
 ### Sprint 1: MD Simulation Infrastructure
 1. **User Story**: As a computational chemist, I need meta-eABF simulations to generate FE maps
    - Tasks:
-     - Implement collective variables (CV1-3) for CRBN domains
-     - Configure AMBER force fields with TIP3P water
+     - Implement collective variables (CV1-3) for CRBN domains (Fig S1)
+     - Configure AMBER ff14sb/gaff force fields with TIP3P water
      - Validate hydrogen mass repartitioning (HMR) implementation
-   - Acceptance: 1μs simulation @135ns/day on RTX 4080
+   - Acceptance: 1μs simulation @135ns/day on RTX 4080 (Methods 2.1)
 
 ### Sprint 2: Autoencoder Core Architecture
 2. **User Story**: As an ML engineer, I need physics-informed autoencoder for latent space mapping
    - Tasks:
-     - Implement encoder (9696→64→32→3) with Swish activation
+     - Implement encoder (9696→64→32→3) with Swish activation (Fig S2)
      - Build symmetric decoder (3→32→64→9696)
-     - Dual loss integration (MSE + CV alignment)
-   - Acceptance: Loss1 ≤1Å, Loss2 ≤1.6Å
+     - Dual loss integration (MSE + CV alignment) from Eq 5
+   - Acceptance: Loss1 ≤1Å, Loss2 ≤1.6Å (Results 3.2)
 
 ### Sprint 3: Conformational Sampling
 3. **User Story**: As a biophysicist, I need path generation along FE landscapes
    - Tasks:
-     - B-spline path interpolation in CV space
-     - Structure relaxation protocol
+     - B-spline path interpolation in CV space (Fig 4)
+     - Structure relaxation protocol (Methods 2.3)
      - Rosetta integration for local geometry fixes
-   - Acceptance: Generate 20-state transition path
+   - Acceptance: Generate 20-state transition path (Movie S1)
 
 ## Component Stack
 
@@ -46,14 +46,15 @@ REQUIREMENTS = {
 
 ### FE Map Generation Protocol
 ```markdown
-1. Run 2×1μs meta-eABF simulations
-2. Compute 3D FE landscape via CZAR
-3. Grid resolution: 0.1Å CV spacing
+1. Run 2×1μs meta-eABF simulations (Methods 2.1)
+2. Compute 3D FE landscape via CZAR (Methods 2.2)
+3. Grid resolution: 0.1Å CV spacing (Fig 3)
 ```
 
 ### Validation Framework
-| Metric          | Target       | Method               |
-|-----------------|--------------|----------------------|
-| Latent-CV RMSD  | ≤1.0Å       | Procrustes analysis  |
-| Path Energy     | ΔG≤5kcal/mol | PMF integration      |
+| Metric          | Target       | Method               | Paper Reference |
+|-----------------|--------------|----------------------|-----------------|
+| Latent-CV RMSD  | ≤1.0Å       | Procrustes analysis  | Fig 3          |
+| Path Energy     | ΔG≤5kcal/mol | PMF integration      | Fig 4          |
+| t-SNE Baseline  | KL-div≤0.1  | Dimensionality comparison | Table 2     |
 ```
