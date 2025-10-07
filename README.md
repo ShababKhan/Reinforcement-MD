@@ -1,53 +1,136 @@
 # Reinforced Molecular Dynamics (rMD) Software
 
-## Introduction
+## 1. Project Overview
 
-This project aims to recreate the Reinforced Molecular Dynamics (rMD) software as described in the paper "Reinforced molecular dynamics: Physics-infused generative machine learning model explores CRBN activation process" by István Kolossváry and Rory Coffey. rMD is a machine learning-based approach that combines Molecular Dynamics (MD) simulation data with a physics-infused autoencoder to efficiently explore protein conformational space and model biologically relevant motions.
+This project aims to replicate the Reinforced Molecular Dynamics (rMD) methodology described in the paper "Reinforced molecular dynamics: Physics-infused generative machine learning model explores CRBN activation process" by István Kolossváry and Rory Coffey. rMD is a novel machine learning approach that integrates Molecular Dynamics (MD) simulation data with a physics-informed autoencoder to enable efficient exploration of protein conformational space and modeling of biologically relevant motions.
 
-## Methodology
+The core innovation is infusing physical context (specifically, free energy landscapes derived from collective variables) directly into the latent space of an autoencoder.
 
-The rMD methodology involves the following key steps:
+## 2. Methodology Recap
 
-1.  **Free Energy Map Generation:** Conducting MD simulations biased by parameters like metadynamics or eABF along chosen Collective Variables (CVs) to generate a 3D free energy (FE) map.
-2.  **Autoencoder Training:** Training a dual-loss function autoencoder. The first loss (`predLoss`, Loss2) ensures accurate reconstruction of protein structures. The second loss (`latentLoss`, Loss1) aligns the autoencoder's latent space (LS) with the CV space, effectively embedding physical information into the latent representation.
-3.  **Physics-Infused Exploration:** Utilizing the trained autoencoder and the FE map to generate novel protein conformations located in low-free-energy regions of the conformational landscape. This allows for efficient exploration of biologically relevant states and transition pathways.
-4.  **Structure Generation & Refinement:** Generating structures along defined pathways in the CV space and subsequently refining them to correct for local geometric distortions.
+The rMD approach follows these key stages:
 
+1.  **MD Simulation & Free Energy Map Generation:** Advanced sampling techniques (e.g., metadynamics, meta-eABF) are used with MD simulations to bias sampling along relevant Collective Variables (CVs). This process generates a 3D free energy (FE) map representing the conformational landscape.
+2.  **Autoencoder Architecture:** A standard encoder-decoder neural network is employed to compress protein structure representations into a low-dimensional latent space (LS) and reconstruct them.
+3.  **Physics Infusion (rMD Core):** A dual-loss training strategy is implemented:
+    *   **$\text{Loss}_2$ ($\text{predLoss}$):** Minimizes the reconstruction error (RMSD) between input and output structures.
+    *   **$\text{Loss}_1$ ($\text{latentLoss}$):** Minimizes the error between the latent space representation and the target CV coordinates. This forces the latent space to become a physically meaningful representation of the CV space.
+4.  **Dual-Loss Training:** The network is trained simultaneously to optimize both $\text{Loss}_1$ and $\text{Loss}_2$, effectively infusing physical information into the latent representation. A weighting factor ($\lambda$) balances these two objectives.
+5.  **Structure Generation & Exploration:** The trained informed autoencoder, guided by the FE map (or directly by CV coordinates), can generate novel protein conformations, particularly in low-free-energy regions, and explore transition pathways.
+6.  **Post-processing:** Generated structures may undergo refinement (e.g., using Rosetta Relax) to correct local geometric distortions.
 
-## Dependencies
+## 3. Implemented Components
 
-The project requires the following Python libraries:
+### 3.1. Basic Autoencoder (`autoencoder_basic.py`)
 
-*   **Core ML Framework:** TensorFlow or PyTorch
-*   **Numerical Operations:** NumPy
-*   **MD Trajectory Handling:** MDAnalysis (or similar)
-*   **Scientific Computing:** SciPy
-*   **Visualization:** Matplotlib, PyMOL (for output rendering)
-*   **Structure Refinement:** Rosetta (optional, or alternative implementation)
+*   **`CRBNAutoencoder`:** Implements the core encoder-decoder architecture with Swish activation, mapping input structure features to a latent space and reconstructing them.
+*   **`calculate_rmsd_loss`:** Defines $\text{Loss}_2$ (predictive loss), calculating the Mean Squared Error (MSE) between input and reconstructed structures. This is proportional to RMSD.
 
-Please refer to `requirements.txt` for a comprehensive list of specific versions.
+### 3.2. Basic Autoencoder Training (`train_autoencoder.py`)
 
-## Tests
+*   **Dummy Data Generation:** Creates synthetic structural data matching the expected input dimensions (e.g., 9696 features).
+*   **`Dataset` & `DataLoader`:** PyTorch utilities for batching dummy data.
+*   **Training Loop:** Trains the `CRBNAutoencoder` using Adam optimizer and only $\text{Loss}_2$ for a set number of epochs.
+*   **Model Persistence:** Saves the trained basic autoencoder weights to `basic_autoencoder_model.pth`.
 
-Unit tests are implemented to verify the functionality of core components, including:
+### 3.3. Informed Autoencoder Utilities (`informed_autoencoder_utils.py`)
 
-*   **Network Layers:** Verification of encoder and decoder architectures.
-*   **Loss Functions:** Validation of `predLoss` (Loss2) and `latentLoss` (Loss1) calculations.
-*   **Data Processing:** Ensuring correct data loading, preprocessing, and CV extraction.
-*   **Model Training:** Testing the dual-loss training loop.
-*   **Structure Generation:** Validating the generation of structures from CV inputs.
-*   **Post-processing:** Confirming the application of structure refinement.
+*   **`calculate_cv_loss`:** Defines $\text{Loss}_1$ (latent-CV alignment loss), calculating MSE between latent space vectors and target CV coordinates.
+*   **`combined_loss`:** Function to calculate the weighted sum of $\text{Loss}_1$ and $\text{Loss}_2$.
 
-Run tests using: `pytest` (or your chosen testing framework).
+### 3.4. Informed Autoencoder Training (`train_informed_autoencoder.py`)
 
-## Usage
+*   **Dummy CV Target Generation:** Creates synthetic CV target data correlated with underlying "ideal" latent representations.
+*   **Loading Basic AE Weights:** Initializes the informed autoencoder by loading weights from the pre-trained basic model.
+*   **Dual-Loss Training Loop:** Trains the model using both $\text{Loss}_1$ and $\text{Loss}_2$ (via `combined_loss`) to infuse physical context.
+*   **Model Persistence:** Saves the weights of the trained informed autoencoder to `informed_autoencoder_model.pth`.
 
-[Detailed usage instructions, including data preparation, training commands, and structure generation examples, will be provided here.]
+### 3.5. Unit Tests (`test_*.py`)
 
-## Contributing
+*   `test_autoencoder_basic.py`: Verifies the structure and `predLoss` calculation of the basic AE.
+*   `test_train_autoencoder.py`: Tests the dummy data generation, DataLoader, and the training execution/saving mechanism.
 
-[Information on how others can contribute to the project.]
+## 4. Dependencies
 
-## License
+The project relies on Python and several key libraries. Please refer to `requirements.txt` for specific version requirements.
 
-[License information.]
+*   **Core ML:** PyTorch
+*   **Numerical Computations:** NumPy
+*   **Testing:** Pytest
+
+## 5. Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd rmd_replication
+    ```
+2.  **Create a virtual environment (recommended):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
+3.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## 6. Usage
+
+All training scripts assume the necessary `autoencoder_basic.py` and `informed_autoencoder_utils.py` are in the same directory or accessible via Python path.
+
+### 6.1. Training the Basic Autoencoder
+
+This trains the autoencoder using only the reconstruction loss ($\text{Loss}_2$).
+
+```bash
+python train_autoencoder.py
+```
+This will generate `basic_autoencoder_model.pth`.
+
+### 6.2. Training the Informed Autoencoder
+
+This trains the autoencoder using both $\text{Loss}_1$ and $\text{Loss}_2$ from the pre-trained basic autoencoder.
+
+```bash
+python train_informed_autoencoder.py
+```
+This will generate `informed_autoencoder_model.pth`.
+
+*Note: The `LAMBDA_LOSS1` parameter in `train_informed_autoencoder.py` controls the balance between reconstruction and physical alignment. Its value may need tuning.*
+
+### 6.3. Running Unit Tests
+
+To ensure all core components function as expected:
+
+```bash
+pytest
+```
+
+## 7. File Structure
+
+```
+.
+├── autoencoder_basic.py
+├── informed_autoencoder_utils.py
+├── train_autoencoder.py
+├── train_informed_autoencoder.py
+├── test_autoencoder_basic.py
+├── test_train_autoencoder.py
+├── README.md             # This file
+├── requirements.txt
+# Trained models will be generated locally:
+# ├── basic_autoencoder_model.pth
+# └── informed_autoencoder_model.pth
+```
+
+## 8. Future Work
+
+*   Implement Collective Variable (CV) calculation and FE map generation from actual MD trajectories.
+*   Integrate real protein structure data (e.g., CRBN PDB files and trajectory frames).
+*   Develop functionality for generating structures along user-defined paths in CV space and post-processing/visualization (as per Figure 4 and supplemental materials).
+*   Investigate and implement alternative loss functions mentioned in the paper.
+
+## 9. License
+
+[Specify your chosen license here, e.g., MIT License]
