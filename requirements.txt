@@ -1,20 +1,4 @@
-# requirements.txt
-# Lists dependencies for the rMD replication project.
-
-# Core deep learning framework
-# Using a range that should be compatible with recent PyTorch versions.
 torch>=2.0.0,<2.4.0
-
-# Numerical operations and array manipulation
 numpy>=1.24.0,<1.27.0
-
-# MD Trajectory Analysis
-# MDAnalysis is a key dependency for data loading and processing.
-mdanalysis>=1.0.0,<2.0.0
-
-# Scientific computing and interpolation (may be needed for FE map lookup)
-scipy>=1.9.0,<1.12.0
-
-# Unit testing framework
-# Pinning to a specific major version for stability.
 pytest~=7.0
+MDAnalysis
