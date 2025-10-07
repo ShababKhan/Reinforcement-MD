@@ -1,0 +1,17 @@
+# Core ML Framework
+# TensorFlow or PyTorch
+
+# Numerical Operations
+NumPy
+
+# MD Trajectory Handling
+MDAnalysis
+
+# Scientific Computing
+SciPy
+
+# Visualization
+Matplotlib
+
+# Structure Refinement (Optional)
+# Rosetta
