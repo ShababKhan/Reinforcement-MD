@@ -1,0 +1,17 @@
+name: crbn-dynamics
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy=1.26.4
+  - scipy=1.13.0
+  - matplotlib=3.9.0
+  - pytorch=2.3.1
+  - torchmd-net=3.1.0
+  - mdanalysis=3.0.0
+  - plumed=2.9.0
+  - pre-commit
+  - pytest
+  - black
+  - mypy
