@@ -1,32 +1,22 @@
-# Project Blueprint: Reinforced Molecular Dynamics (rMD) Recreation
+# Reinforced Molecular Dynamics (rMD) Project Documentation
 
 ## Introduction
-This document outlines the plan to replicate the Reinforced Molecular Dynamics (rMD) methodology described in Kolossváry & Coffey (2025). The goal is to implement a dual-loss autoencoder network that integrates a pre-computed Free Energy (FE) map, derived from Molecular Dynamics (MD) simulations of the CRBN conformational change, into the latent space.
+This document outlines the scientific methodology and structure for recreating the Reinforced Molecular Dynamics (rMD) simulation framework described in Kolossváry & Coffey (doi:10.1101/2025.02.12.638002). Our goal is to implement a dual-loss autoencoder that enforces an isomorphism between the neural network's latent space and the Free Energy (FE) landscape derived from MD collective variables (CVs).
 
-## Methodology
-The core scientific methodology relies on linking the autoencoder's latent space to the collective variable (CV) space defined by the simulation.
-
-**Key Scientific Concepts to Implement:**
-1.  **MD Simulation Data:** Data representing the CRBN open/closed transition (input coordinates from 10,000 heavy-atom structures).
-2.  **Collective Variables (CVs):** Three CVs defined by the relative distances (COMs) of CRBN domains (CRBN-NTD, CTD, HBD) and DDB1-BPC (Figure S1).
-3.  **Autoencoder Structure:** Encoder/Decoder using fully connected layers with **Swish** activation.
-4.  **Dual Loss Function:**
-    *   **Loss2 (Reconstruction):** Average RMSD between input and output structures.
-    *   **Loss1 (Latent Physics Infusion):** RMSD between Latent Space coordinates and target CV coordinates.
-5.  **Application:** Generating structures along a low-energy path defined by a B-spline in CV space (Figure 4).
-
-**Code Quality Mandate:** All Python code must adhere strictly to **PEP 8 standards**.
+## Methodology Summary
+The rMD model uses a standard Autoencoder (AE) structure (Encoder -> Latent Space (LS) -> Decoder) trained on MD trajectory snapshots of CRBN. The key innovation is training the AE not just on structural reconstruction ($\text{Loss}_2$), but simultaneously forcing the 3D Latent Space to map isomorphically onto the 3D Free Energy (FE) landscape defined in the Collective Variable (CV) space ($\text{Loss}_1$). By minimizing $\text{Loss}_1$, the LS becomes physically meaningful, allowing us to interpret points in the LS as points on the FE map. We will generate the CRBN transition path by sampling points along a B-spline fitted across the known open/closed states in the CV space, feeding these CVs into the LS, and decoding the resulting structures.
 
 ## Dependencies
-The software components require the following technology stack:
-*   **Technology:** Python 3.x
-*   **Primary ML Library:** PyTorch (or TensorFlow)
-*   **Structural/Data Handling:** NumPy, SciPy, MDAnalysis
-*   **Wolfram:** Implementation details (Layer structure, specific loss weighting) must be cross-referenced with the paper/Supplementary Material.
+The required technology stack is **Python**. Key libraries include:
+- **PyTorch/TensorFlow:** For building and training the neural network. (We default to PyTorch for modern implementations unless specified otherwise).
+- **NumPy:** For numerical array operations.
+- **SciPy:** For mathematical functions, particularly B-spline fitting.
+- **MDAnalysis/Biopython:** Required for structure parsing and calculating domain Center of Masses (COMs) for CV generation.
+
+*Note: Post-processing relies on external tools like Rosetta, as mentioned in the paper.*
 
 ## Tests
-All components must include unit tests. Key milestones for validation:
-1.  **Data Preprocessing Test:** Verify that CV calculation for known structures (PDB 6H0G, 6H0F) yields stable, correct values.
-2.  **Model Fit Test:** Verify that the network achieves $\text{Loss}_2 \approx 1.6 \text{ Å}$ and $\text{Loss}_1 \approx 1.0 \text{ Å}$ on the training/validation sets, reflecting the paper's results (T2.5).
-3.  **Physics Correlation Test:** Verify that sampling structures from the LS and plotting them against the FE map resembles Figure 3.
-4.  **Transition Test:** Verify that structures generated along the B-spline path successfully navigate between the open and closed states (as seen in Movie S1).
+All code must adhere to **PEP 8** standards. The primary verification points are:
+1.  Final converged $\text{Loss}_2$ (Reconstruction RMSD) $\approx 1.6 \text{ Å}$.
+2.  Final converged $\text{Loss}_1$ (Latent Space Alignment) $\approx 1.0 \text{ Å}$.
+3.  The 3D Latent Space must be topologically consistent with the 3D Free Energy map.
