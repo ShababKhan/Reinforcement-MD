@@ -1,0 +1,17 @@
+# rMD Project Structure
+
+# src/
+#   data_loader.py       # Handles reading PDBs, MD structures, superposition (US 1.2)
+#   model.py             # Defines Autoencoder architecture, Loss1, Loss2 (US 1.3, 2.1, 2.2)
+#   trainer.py           # Implements the dual-loss optimization loop (US 2.3)
+#   path_generator.py    # Implements B-spline fitting and path prediction (US 3.1, 3.2)
+#   post_processor.py    # Interface for Rosetta/Pymol (US 3.3, 3.4)
+#
+# data/
+#   raw/                 # Placeholder for MD trajectory/FE map data
+#   mock/                # Placeholder for generated mock training data (US 1.5)
+#
+# tests/
+#   test_convergence.py  # Unit tests for Loss functions and trained metrics (US 2.4)
+#
+# requirements.txt     # List of all software dependencies (Tech Stack)
