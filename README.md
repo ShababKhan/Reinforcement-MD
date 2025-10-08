@@ -1,81 +1,58 @@
-IyBSZWluZm9yY2VkIE1vbGVjdWxhciBEeW5hbWljcyAock1EKQoKKipQaHlz
-aWNzLUluZnVzZWQgR2VuZXJhdGl2ZSBNYWNoaW5lIExlYXJuaW5nIGZvciBQ
-cm90ZWluIENvbmZvcm1hdGlvbmFsIEV4cGxvcmF0aW9uKioKClshW1B5dGhv
-biAzLjgrXShodHRwczovL2ltZy5zaGllbGRzLmlvL2JhZGdlL3B5dGhvbi0z
-LjgrLWJsdWUuc3ZnKV0oaHR0cHM6Ly93d3cucHl0aG9uLm9yZy9kb3dubG9h
-ZHMvKQpbIVtMaWNlbnNlOiBNSVRdKGh0dHBzOi8vaW1nLnNoaWVsZHMuaW8v
-YmFkZ2UvTGljZW5zZS1NSVQteWVsbG93LnN2ZyldKGh0dHBzOi8vb3BlbnNv
-dXJjZS5vcmcvbGljZW5zZXMvTUlUKQoKLS0tCgojIyBJbnRyb2R1Y3Rpb24K
-ClRoaXMgcmVwb3NpdG9yeSBjb250YWlucyBhIFB5dGhvbiBpbXBsZW1lbnRh
-dGlvbiBvZiAqKnJlaW5mb3JjZWQgbW9sZWN1bGFyIGR5bmFtaWNzIChyTUQp
-KiosIGEgbm92ZWwgY29tcHV0YXRpb25hbCBtZXRob2QgdGhhdCBjb21iaW5l
-cyBtb2xlY3VsYXIgZHluYW1pY3MgKE1EKSBzaW11bGF0aW9ucyB3aXRoIHBo
-eXNpY3MtaW5mdXNlZCBtYWNoaW5lIGxlYXJuaW5nIHRvIGV4cGxvcmUgYmlv
-bG9naWNhbGx5IHJlbGV2YW50IHByb3RlaW4gY29uZm9ybWF0aW9uYWwgdHJh
-bnNpdGlvbnMuCgojIyMgS2V5IElubm92YXRpb24KCnJNRCByZXBsYWNlcyB0
-aGUgYXJiaXRyYXJ5IGxhdGVudCBzcGFjZSBvZiB0cmFkaXRpb25hbCBhdXRv
-ZW5jb2RlcnMgd2l0aCBhICoqcGh5c2ljYWwgZnJlZSBlbmVyZ3kgKEZFKSBt
-YXBqKiBkZXJpdmVkIGZyb20gZW5oYW5jZWQgc2FtcGxpbmcgTUQgc2ltdWxh
-dGlvbnMuIFRoaXMgZW5hYmxlczoKLSAqKlRhcmdldGVkIHN0cnVjdHVyZSBn
-ZW5lcmF0aW9uKiogZnJvbSBsb3ctZW5lcmd5IHJlZ2lvbnMKLSAqKkNvbmZv
-cm1hdGlvbmFsIHRyYW5zaXRpb24gcGF0aHdheSBleHBsb3JhdGlvbioqCi0g
-KipEZXNrdG9wLXNjYWxlIGNvbXB1dGF0aW9uKiogb24gYSBzaW5nbGUgR1BV
-CgojIyMgU2NpZW50aWZpYyBBcHBsaWNhdGlvbgoKV2UgZGVtb25zdHJhdGUg
-ck1EIGJ5IG1vZGVsaW5nIHRoZSBjb25mb3JtYXRpb25hbCB0cmFuc2l0aW9u
-IG9mICoqY2VyZWJsb24gKENSQk4pKiogYW4gRTc3IGxpZ2FzZSBzdWJzdHJh
-dGUgcmVjZXB0b3IgY3J1Y2lhbCBmb3IgbW9sZWN1bGFyIGdsdWUgZGVncmFk
-ZXIgdGhlcmFwaWVzOgotICoqT3BlbiBzdGF0ZSoqIOKGkiAqKkNsb3NlZCBz
-dGF0ZSoqIHRyYW5zaXRpb24gdXBvbiBJTWlEIGJpbmRpbmcKLSAzRCBjb2xs
-ZWN0aXZlIHZhcmlhYmxlIHNwYWNlIGNhcHR1cmluZyBkb21haW4gbW90aW9u
-cwotIEZ1bGwgYXRvbWlzdGljIGRldGFpbCBvZiB0cmFuc2l0aW9uIG1lY2hh
-bmlzbQoKLS0tCgojIyBNZXRob2RvbG9neQoKIyMjIDEuIERhdGEgUHJlcHJl
-cGVyYXRpb246IEZsYXR0ZW5pbmcgYW5kIFN1cGVycG9zaXRpb24KClNpbmNl
-IFJNRCBpcyBkZXNpZ25lZCB0byBjb25qZWN0dXJlIG9ubHkgdGhlIGludGVy
-bmFsIGNvbmZvcm1hdGlvbmFsIG1vdGlvbnMgb2YgdGhlIHByb3RlaW4sIGVu
-c3VyaW5nIGl0cyBub3QgaW5mbHVlbmNlZCBieSBnbG9iYWwgcm90YXRpb25z
-IG9yIHRyYW5zbGF0aW9ucywgYSBjcnVjaWFsIHByZXByb2Nlc3Npbmcgc3Rl
-cCBpcyByZXF1aXJlZDoKCTEgyyoqSW5wdXQgRGF0YSBTdHJ1Y3R1cmUqKjog
-VGhlIGZ1bmRhbWVudGFsIGlucHV0IGNvbnNpc3RzIG9mIGEgbW9sZWN1bGFy
-IGR5bmFtaWNzIHRyYWplY3Rvcnkgb2YgJ04nIGZyYW1lcy4gRWFjaCBmcmFt
-ZSBpcyBkZXNjcmliZWQgYnkgdGhlIENhcnRlc2lhbiBjb29yZGluYXRlcyAo
-eCwgeSwgeikgb2YgJ00nIGhlYXZ5IGF0b21zLiBGb3IgQ1JCTiBvbmx5LCAn
-SydgIOEzIDIyMjs3Mio0IH1cZGVzcGhlcmUgNlxcIH0kIGhlYXZ5IGF0b21z
-XGZzc2VlIHJlc3VsdCBpIGcgcC42OTY5NiB9fSMuCi0gKipTdXBlcnBvc2l0
-aW9uOioqIEJlZm9yZSBmbGF0dGVuaW5nLCBlY2ggZnJhbWUgaXMgYWxpZ25l
-ZCBhZ2FpbnN0IGEgcmVmZXJlbmNlIGZyYW1lIChGcmFtZSAwKS4gVGhpcyBz
-dGVwIGVmZmVjdGl2ZWx5IGNlbnRlcnMgdGhlIHN0cnVjdHVyZSBhbmQgcmVt
-b3ZlcyB0aGUgZ2xvYmFsIG1vdGlvbiwgbGVhdmluZyBvbmx5IHRoZSBpbnRl
-cm5hbCBjb25mb3JtYXRpb25hbCBjaGFuZ2VzIGFzIHJlbGV2YW50IHRvIHRo
-ZSBBdXRvZW5jb2Rlci4KLSAnKipGbGF0dGVuaW5nOioqIFRoZSByZXN1bHRp
-bmcgJ01cIHRpbWVzIDMhIGNvb3JkaW5hdGUnIHBvaW50IHBhciBhdCBhdGlv
-bnMgYXJyYXkgZm9yIGVhY2ggZnJhbWUgaXMgZmxhdHRlbmVkIGludG8gYSBz
-aW5nbGUgMWQgdiBlY3RvcjQgZm9yIGlucHV0IHRvIHRoZSBFbmNvZGVyLiAK
-CkludXRpb246IFRoaXMgc3RlcCBkaXJlY3RseSBpbXBsZW1lbnRzIHRoZSBy
-ZXF1aXJlbWVudCBmb3IgaW50ZXJuYWwgY29vcmRpbmF0ZSBsZWFybmluZywg
-dHlpbmcgdGhlIGlucHV0IGZvcm1hdCB0byB0aGUgbW9sZWN1bGFyIG1lY2hh
-bmljcyBuZWNlc3NpdHkgb2YgZWxpbWluYXRpbmcgcmlnaWQtYm9keSBtb3Rp
-b24gYmVmb3JlIG5ldXJhbCBuZXR3b3JrIHRyYWluaW5nLgoKIyMjIDIuIEZy
-ZWUgRW5lcmd5IE1hcCBDb25zdHJ1Y3Rpb24KCi0tLS0tCgogICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCgoK
-ICgoVG8gYmUgcG9wdWxhdGVkIGJ5IHRoZSBTb2Z0d2FyZSBEZXZlbG9wZXIg
-YmFzZWQgb24gVDUuMSkgKGZ1dHVyZSBUYXNrKSoqCgotLS0tLQoKIyMjIDMu
-IFBoeXNpY3MtSW5mdXNlZCBBdXRvZW5jb2RlcgoKIC0tLS0tCgogICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-CgoKICgoVG8gYmUgcG9wdWxhdGVkIGJ5IHRoZSBTb2Z0d2FyZSBEZXZlbG9w
-ZXIgYmFzZWQgb24gVDIgJmFtcDsgVDIpIChmdXR1cmUgVGFzaykqKgotLS0t
-LQoKIyMjIDQuIER1YWwtTG9zcyBGdW5jdGlvbgoKIC0tLS0tCgogICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-CgoKICgoVG8gYmUgcG9wdWxhdGVkIGJ5IHRoZSBTb2Z0d2FyZSBEZXZlbG9w
-ZXIgYmFzZWQgb24gVDIgJmFtcDsgVDIpIChmdXR1cmUgVGFzaykqKgotLS0t
-LQoKIyMjIDUuIENvbmZvcm1hdGlvbmFsIFBhdGggRXhwbG9yYXRpb24KCgoK
-LS0tCgojIyBEZXBlbmRlbmNpZXMKCiMjIyBQeXRob24gRW52aXJvbm1lbnQK
-YGBgYmFzaApQeXRob24gPj0gMy44CmBgYAoKIyMjIENvcmUgTGlicmFyaWVz
-CgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KCioqRGVlcCBMZWFy
-bmluZyAqKgpweXRvcmNoCmBgYAoKICAgICAgICAgICAgICAgICoqTnVtZXJp
-Y2FsIE9wZXJhdGlvbnMvRGF0YSBIYW5kbGluZyoqCmBgYQpudW1weQptYXRw
-bG90bGliXGphYyUKYGBgCnJlZ2lzdHJ5X2VuZHBvaW50CgooVG8gYmUgcG9w
-dWxhdGVkIGJ5IHRoZSBRQSBFbmdpbmVlciBiYXNlZCBvbiBzZWN0aW9uIDIg
-b2YgQmx1ZXByaW50LSoqCgovLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAv
-LyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAvLyAv
-LyAvLyAvLyAvCiMjIyBJbnN0YWxsYXRpb24KCmBgYmFzaApweXRob24gL...
+# Reinforced Molecular Dynamics (rMD) Agent
+
+## Introduction
+
+This repository contains the Python implementation of the Reinforced Molecular Dynamics (rMD) methodology, as described in the paper "Reinforced molecular dynamics: Physics-infused generative machine learning model explores CRBN activation process" (Kolossváry & Coffey, 2025).
+
+The rMD model is an informed autoencoder designed to efficiently explore protein conformational space by infusing physics-based free-energy landscape data into its latent representation.
+
+## Methodology
+
+#### 1. Data Preprocessing: Flattening and Superposition
+
+The rMD model requires input data to be preprocessed to remove global translational and rotational degrees of freedom, ensuring the network learns only internal conformational changes. This mirrors the methodology described in the paper: *"All trajectory frames from the MD simulation are superposed to a single frame..."*
+
+1. **Input Data Structure:** The fundamental input consists of an MD trajectory of $N$ frames, each describing the Cartesian coordinates $(x, y, z)$ of $M$ heavy atoms (where $M \approx 3232$ for CRBN, resulting in a vector length of 9696).
+2. **Superposition:** Before flattening, every frame is aligned relative to a reference frame (Frame 0 in the simplest implementation). This process centers the coordinates of the protein structure by moving the center of mass (or geometry) to the origin, conceptually eliminating global translation.
+3. **Flattening:** The resulting $M \times 3$ coordinate array for each frame is flattened into a single $1 \times (M \times 3)$ vector, which serves as the input to the Encoder network.
+
+**Scientific Link:** This step directly implements the requirement for internal coordinate learning, tying the input format to the molecular mechanics necessity of eliminating rigid-body motion before neural network training.
+
+#### 2. Model Architecture: The Informed Autoencoder (T2.1 - T2.3)
+
+The core architecture is an Autoencoder, implemented using PyTorch, composed of an Encoder and a Decoder network connected via a 3-dimensional Latent Space (LS).
+
+1. **Encoder:** A series of fully connected (FC) layers gradually compresses the 9696-dimensional input vector down to the 3-dimensional latent space vector.
+2. **Decoder:** A series of FC layers expands the 3-dimensional LS vector back to the 9696-dimensional output vector (the reconstructed coordinates).
+3. **Activation:** All hidden layers in both the Encoder and Decoder utilize the **Swish** activation function ($\text{x} \sigma(\text{x})$), as specified in the paper's network design implicitly derived from the context of VAEs and deep learning in structural biology.
+
+**Scientific Link:** The 3-dimensional Latent Space is the key physical concept, designed to directly correspond to the 3-dimensional Collective Variable (CV) space where the Free Energy (FE) map is defined.
+
+#### 3. Dual-Loss Optimization (T3.1 - T3.3)
+
+The network is trained by simultaneously minimizing two loss functions, injecting physics into the optimization process. This process uses a weighted sum optimization: $L_{\text{Total}} = W_1 \cdot L_1 + W_2 \cdot L_2$.
+
+1. **$L_1$ (Latent Loss):** Measures the discrepancy between the Latent Space coordinates produced by the Encoder and the ground truth Collective Variable ($\text{CV}$) targets. This is calculated using Mean Squared Error (MSE) on the 3D vectors. Minimizing $L_1$ forces the network to learn the physics-based map (CV $\rightarrow$ LS).
+2. **$L_2$ (Reconstruction Loss):** Measures the fidelity of the reconstructed coordinates against the original input coordinates, often reported as RMSD. This is calculated using Mean Absolute Error (MAE) (L1 Loss) on the high-dimensional vectors, which is a robust metric for structural dissimilarity. Minimizing $L_2$ ensures the network performs accurate structure reconstruction.
+
+**Scientific Link:** The dual-loss approach explicitly links the abstract machine learning latent space ($L_1$) to the scientifically meaningful collective variable space, while maintaining structural correctness ($L_2$).
+
+## Dependencies
+
+A full list of required Python libraries and versions is provided in `requirements.txt`. Key dependencies include:
+
+*   **PyTorch (`torch`):** For building, training, and optimizing the neural network models.
+*   **NumPy (`numpy`):** For efficient manipulation of high-dimensional numerical data, synthetic data generation, and array operations.
+*   **Matplotlib (`matplotlib`):** Required for visualizations of loss curves, the 3D free-energy map, and the trained latent space (Sprint 2).
+
+## Tests
+
+This section will document the verification process:
+
+1.  **Unit Tests:** Verification of data integrity, loss function correctness, and module functionality.
+2.  **Integration Tests:** Verification of the full training pipeline using synthetic data.
+3.  **Scientific Validation:** Confirmation that the trained latent space visually correlates with the synthetic Free Energy map (as measured by the coloring utility).
+
+Initial unit tests for data preprocessing (`tests/test_data_utils.py`) have confirmed:
+*   Data dimensions meet the expected `(N_frames, 9696)` for coordinates.
+*   The `superpose_and_flatten` utility correctly eliminates global translational degrees of freedom by centering the input structures before training.
