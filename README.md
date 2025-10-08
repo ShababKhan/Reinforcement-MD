@@ -1,18 +1,17 @@
-# Reinforced Molecular Dynamics (rMD) Reproduction Project
+# Reinforced Molecular Dynamics (rMD) Project
 
-This repository aims to faithfully reproduce the **Reinforced Molecular Dynamics (rMD)** methodology proposed by Kolossváry & Coffey (2025) to model the CRBN open-close conformational transition.
+This repository contains the code implementation for the Reinforced Molecular Dynamics (rMD) method as described in Kolossváry & Coffey (2025), focusing on modeling the CRBN conformational transition.
 
 ## Project Status
-**Blueprint Complete.** Currently in **Sprint 1: Data Ingestion and Base Model Foundation**.
+This project is initialized and currently executing **Sprint 1**: Data Ingestion and Base Autoencoder (Loss2 only).
 
-## Documentation
-For the full breakdown of the scientific methodology, user stories, and acceptance criteria, refer to:
-- **`docs/rMD_METHODOLOGY.md`**
+**Documentation Status:**
+*   `docs/rMD_METHODOLOGY.md`: Created, detailing the dual-loss structure and path generation plan.
 
-## Technology Stack
-- **Language:** Python 3.x
-- **Deep Learning:** PyTorch (Recommended)
-- **Tools:** NumPy, SciPy (for B-spline/Math)
+**Artifacts Created:**
+*   `requirements.txt`: Core dependencies listed.
+*   `src/__init__.py`: Initialized package structure.
 
-## Contact
-AI Project Manager overseeing the execution.
+**Immediate Next Tasks (Sprint 1):**
+1.  Implement `data_loader.py` to handle structure loading, heavy-atom extraction, and alignment (M12, M4, M5).
+2.  Implement the base Encoder/Decoder network in `model.py` using Swish activation (M1, M2, M3).
