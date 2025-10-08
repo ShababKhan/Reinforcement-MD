@@ -1,0 +1,17 @@
+# Core Numerical & Structure Analysis Libraries (Must be implemented)
+numpy>=1.20.0
+pandas>=1.0.0
+scipy>=1.7.0
+mdanalysis>=0.20.0 # Placeholder for structure I/O and alignment
+
+# Machine Learning Framework (Decision needed in Sprint 1, proceeding with PyTorch as primary guess)
+torch>=2.0.0
+# torch_geometric # Potentially needed depending on AE implementation details
+
+# Plotting and Visualization
+matplotlib>=3.5.0
+
+# External Tool Placeholders (Required for full scientific replication)
+# rosetta # For Post-processing (US 3.3, 4.1)
+# plumed # For MD setup (MD-1 to MD-6)
+# wolfram-mathematica # For core AE training (AE-1, LM-1 to LM-4)
