@@ -18,45 +18,44 @@ The rMD model requires input data to be preprocessed to remove global translatio
 
 **Scientific Link:** This step directly implements the requirement for internal coordinate learning, tying the input format to the molecular mechanics necessity of eliminating rigid-body motion before neural network training.
 
-#### 2. Model Architecture
+#### 2. Model Architecture (rMD Autoencoder)
 
-The core of rMD is a fully connected (FC) autoencoder implemented in PyTorch, structured to compress the 9696-dimensional input vector into a 3-dimensional latent space ($CV_{dim}=3$).
+The core structure is a fully connected (FC) autoencoder consisting of an encoder and a decoder chained via a 3-dimensional latent space (LS).
 
-*   **Encoder:** Gradually shrinks the dimensionality (e.g., 9696 -> 4096 -> 2048 -> 1024 -> 256 -> 3).
-*   **Decoder:** Expands the dimensionality (e.g., 3 -> 256 -> 1024 -> 2048 -> 4096 -> 9696).
-*   **Activation:** All hidden layers utilize the **Swish** activation function, as opposed to standard ReLU.
+1. **Encoder:** Compresses the 9696D input vector through a cascade of shrinking FC layers (e.g., $9696 \to 4096 \to \dots \to 3$). Each hidden layer is augmented with the **Swish** activation function, as described in the paper's Materials and Methods. The final layer outputs the 3D LS coordinates.
+2. **Decoder:** Expands the 3D LS coordinates back to the original 9696D Cartesian coordinate space (e.g., $3 \to 256 \to \dots \to 9696$).
+3. **Integration:** The `rMD_Network` combines these components for a full forward pass, producing both the latent coordinates and the reconstructed structure.
 
-#### 3. Dual-Loss Optimization
+#### 3. Dual-Loss Optimization (Physics Infusion)
 
-The network is optimized using a weighted sum of two loss functions:
+The network is trained by simultaneously minimizing two loss functions using a weighted sum:
 
-$$
-\text{Total Loss} = W_1 \cdot L_1 + W_2 \cdot L_2
-$$
+*   **Loss2 (Reconstruction Loss - Structural Fidelity):** Calculated as the Mean Absolute Error (MAE) or Root Mean Square Deviation (RMSD) between the input coordinates and the output reconstructed coordinates. This ensures the prediction is structurally accurate.
+*   **Loss1 (Latent Loss - Physics Correlation):** Calculated as the Mean Squared Error (MSE) between the 3D LS coordinates and the 3D Collective Variable (CV) coordinates. This loss forces the LS to become an accurate representation of the physical CV space.
 
-*   **$L_1$ (Latent Loss):** Measures the correlation between the latent space coordinates ($LS$) and the input collective variables ($CV$). It uses Mean Squared Error ($\text{MSE}$) between $LS$ and $CV$: $\text{MSE}(LS, CV)$. Minimizing $L_1$ forces the latent space to map onto the physical CV space, infusing physics into the network.
-*   **$L_2$ (Reconstruction Loss):** Measures the fidelity of the reconstructed structure ($\text{Pred}$) compared to the original input ($\text{Input}$). It uses Mean Absolute Error ($\text{MAE}$) between $\text{Pred}$ and $\text{Input}$: $\text{MAE}(\text{Pred}, \text{Input})$. This ensures the structural integrity of the generated protein models.
+The total optimization minimizes $L_{Total} = (W_1 \cdot L_1) + (W_2 \cdot L_2)$.
 
-#### 4. Model Training
+#### 4. Physics Infusion and Verification (Figure 3 Analogy)
 
-The `rMD_Network` is trained using the **Adam optimizer** with a learning rate of $1\times 10^{-4}$ for 10,000 epochs, using a batch size of 64 on synthetic data. The training process tracks total loss and structural RMSD on a 20% validation set to ensure non-overfitting convergence.
+The scientific validity is confirmed by the correlation between the learned Latent Space (LS) and the known Free Energy (FE) map defined over the CV space.
 
-#### 5. Physics Infusion and Verification (Figure 3 Analogy)
-
-The scientific validation is performed by comparing the learned Latent Space (LS) to a synthetic Free Energy (FE) map defined over the CV space. The trained `Encoder` is used to map all input frames onto the 3D LS. By assigning the $\Delta G$ value (derived from the synthetic FE map) to each point in the LS, a visual confirmation is acquired: the LS points cluster within the low-energy basins of the FE landscape, proving that the network successfully learned the intended correlation.
+1. **Synthetic FE Map:** A 3D grid is constructed in the CV space storing synthetic $\Delta G$ values, mimicking a realistic potential energy landscape.
+2. **FE Mapping:** Each extracted LS point (from the trained model) is 'snapped' to the closest grid point in the synthetic FE map to assign it a physical $\Delta G$ value.
+3. **Verification:** Visualization confirms that LS regions corresponding to low-energy basins (green) in the FE map are accurately clustered and separated, validating the successful infusion of physical context via the dual loss.
 
 ## Dependencies
 
 A full list of required Python libraries and versions is provided in `requirements.txt`. Key dependencies include:
 
 *   **PyTorch (`torch`):** For building, training, and optimizing the neural network models.
-*   **NumPy (`numpy`):** For efficient manipulation of high-dimensional numerical data, synthetic data generation, and array operations.
-*   **Matplotlib (`matplotlib`):** Required for visualizations of loss curves, the 3D free-energy map, and the trained latent space.
+*   **NumPy (`numpy`):** For efficient manipulation of high-dimensional numerical data and synthetic data generation.
+*   **Matplotlib (`matplotlib`):** Required for 3D visualizations of the latent space and free-energy map.
 
-## Tests
+## Tests (Verification Summary)
 
-The project includes unit and integration tests to guarantee code integrity and scientific accuracy.
+Initial unit tests for data preprocessing (`tests/test_data_utils.py`) passed, confirming correct data dimensions and the elimination of global translational degrees of freedom.
 
-1.  **Data Integrity Tests:** Confirmed the correct dimensions and removal of translational invariance during preprocessing.
-2.  **Model and Loss Tests:** Confirmed correct dimensionality of the autoencoder and proper arithmetic functionality of the Dual-Loss implementation.
-3.  **Integration Tests (QA Checkpoint 3):** Verified training convergence and successful demonstration of the LS-FE correlation via visualization.
+Integration tests verified the full pipeline:
+*   The `rMD_Network` forward pass and layer dimensionality are correct.
+*   The `DualLoss` function operates arithmetically correct and non-negative.
+*   **Scientific Validation:** The training process successfully converged, and the final analysis plot confirmed the successful mapping of the learned Latent Space onto the synthetic Free Energy map, fulfilling the core MVP objective.
