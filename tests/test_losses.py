@@ -1,6 +1,6 @@
 import torch
 import pytest
-from losses import rmsd_loss, latent_loss # Import both loss functions
+from src.losses.losses import rmsd_loss, latent_loss # Import both loss functions from the correct path
 
 def test_rmsd_loss_identical_inputs():
     """
