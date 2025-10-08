@@ -1,35 +1,35 @@
 # Reinforced Molecular Dynamics (rMD) - Dependencies
 # Python >= 3.8 required
 
-# MD Simulation
-openmm>=8.1.0
-# plumed>=2.9.0  # Note: plumed requires separate installation via conda
-mdanalysis>=2.0.0
-biopython>=1.79
-
-# Machine Learning - TensorFlow/Keras stack
-tensorflow>=2.8.0
-keras>=2.8.0
+# Machine Learning - Standardized on PyTorch
+torch>=2.0.0
+# Optional: torchvision, torchaudio (Not strictly needed for this project)
 
 # Numerical Computing
 numpy>=1.21.0
 scipy>=1.7.0
 pandas>=1.3.0
 
-# Visualization
+# Visualization and Utilities
 matplotlib>=3.4.0
-seaborn>=0.11.0
-plotly>=5.0.0
+seaborn>=0.11.0 # For potential statistical plots
+# plotly>=5.0.0 # Optional, for interactive 3D plots
 
-# Utilities
-h5py>=3.6.0
-pyyaml>=6.0
-tqdm>=4.62.0
+# MD Simulation (Dependencies for full pipeline - used for context now)
+# NOTE: OpenMM and PLUMED must be installed via Conda for full functionality
+# openmm>=8.1.0 
+# plumed>=2.9.0
+mdanalysis>=2.0.0
+biopython>=1.79
 
 # Testing & Quality
 pytest>=7.0.0
 pytest-cov>=3.0.0
-flake8>=4.0.0
+flake8>=4.0.0 # PEP 8 enforcement
 
-# Additional Scientific Tools
-scikit-learn>=1.0.0
+# Utilities
+h5py>=3.6.0 # For saving/loading models
+pyyaml>=6.0 # For config files
+tqdm>=4.62.0 # Progress bars
+scikit-learn>=1.0.0 # For data splitting utilities and potential metrics
+
