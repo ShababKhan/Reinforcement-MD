@@ -1,43 +1,47 @@
-# Project Blueprint: Replicating Self-Attention Mechanism from "Attention Is All You Need"
+# Project Blueprint: Replicating Core Transformer Components
 
-This blueprint details the plan, dependencies, and methodology required to faithfully reimplement the core Transformer attention mechanism, specifically focusing on the Scaled Dot-Product Attention.
+**Reference Paper:** "Attention Is All You Need" (Vaswani et al., 2017)
+**Technology Stack:** Python 3.x, NumPy (Primary Dependency)
+**PEP 8 Compliance:** Mandatory for all code developed.
 
-## Introduction
-This project aims to recreate the core numerical components of the Transformer architecture as described in Vaswani et al. (2017). Adherence to PEP 8 standards for all Python code and comprehensive documentation is mandatory.
+## 1. Methodology Summary
 
-## Methodology Summary
-The core methodology revolves around implementing the Scaled Dot-Product Attention mechanism, defined by the formula:
-$$ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V $$
-The implementation will be component-based, starting with the most fundamental mathematical operation and building complexity through sprints.
+The project aims to recreate the core numerical components of the Transformer architecture. The foundational scientific principle is the Scaled Dot-Product Attention mechanism, which weights the importance of different parts of the input sequence based on their dot product similarity to a query. This functionality must be implemented with high numerical precision appropriate for deep learning frameworks, using NumPy for matrix operations.
 
-## Agile Project Plan
+## 2. Agile Project Plan (Tasks & Sprints)
 
-**Technology Stack:** Python, NumPy (primary numerical library).
+| Sprint | Task ID | Task Description / User Story | Acceptance Criteria (AC) | Paper Mapping | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | S1-T1 | Implement the core `scaled_dot_product_attention(Q, K, V)` function. | AC1: Function accepts Q, K, V tensors. AC2: Correctly computes $QK^T$ and scales by $\frac{1}{\sqrt{d_k}}$. AC3: Applies row-wise Softmax. AC4: Multiplies result by V. | V1, V2, V3 | **COMPLETED** |
+| **1** | S1-T2 | Implement unit tests for `scaled_dot_product_attention`. | AC1: Tests cover general tensor shape preservation. AC2: Tests verify scaling factor application. AC3: Assert correctness against known theoretical result within tolerance. | V4 | **COMPLETED** |
+| **2** | S2-T1 | Implement the linear projection/splitting logic for MultiHeadAttention. | AC1: Implement the initial linear projection $W^Q, W^K, W^V$ logic (conceptual split for single-function integration). AC2: Ensure output shapes are correct for $h$ heads. | V5 | *PENDING* |
+| **2** | S2-T2 | Implement the head concatenation and final output projection ($W^O$). | AC1: Concatenate results from all attention heads. AC2: Apply final linear projection $W^O$. | V6, V7 | *PENDING* |
+| **3** | S3-T1 | Implement the full Transformer Encoder Layer structure. | AC1: Integrate MultiHeadAttention (S2 tasks). AC2: Implement Residual Connections (Add & Norm). AC3: Implement Position-wise Feed-Forward Network (FFN). | V8 | *PENDING* |
+| **4** | S4-T1 | Implement Positional Encoding generator function. | AC1: Implement the sinusoidal formula PE formula. AC2: Function returns a matrix of shape (sequence\_length, model\_dimension). | V9 | *PENDING* |
 
-### Sprint 1: Core Attention Components (Focus: Scaled Dot-Product Attention)
+## 3. Component & Dependency List
 
-| Task ID | User Story / Task Description | Acceptance Criteria (AC) | Maps to Paper Feature |
-| :--- | :--- | :--- | :--- |
-| S1-T1 | Implement the core `scaled_dot_product_attention(Q, K, V)` function. | AC1: Function accepts Q, K, V tensors. AC2: Computes $QK^T$. AC3: Divides by $\sqrt{d_k}$ (where $d_k$ is determined from K's last dimension). AC4: Applies row-wise softmax. AC5: Multiplies by V. AC6: Passes unit tests for shape preservation and numerical stability within expected tolerance. | Section 3.2, Formula (1) |
-| S1-T2 | Implement a test suite for `scaled_dot_product_attention`. | AC1: Tests include zero inputs, boundary conditions, and checks against known manual calculations. AC2: Tests must cover the scaling factor application correctly. | Figure 1 (Conceptual flow) |
-
-### Sprint 2: Multi-Head Attention
-
-| Task ID | User Story / Task Description | Acceptance Criteria (AC) | Maps to Paper Feature |
-| :--- | :--- | :--- | :--- |
-| S2-T1 | Implement the linear projection logic for splitting Q, K, V into multiple heads. | AC1: Function accepts concatenated Q/K/V and `num_heads`. AC2: Correctly shapes the tensors for parallel processing. | Section 3.2, Formula (2) |
-| S2-T2 | Implement the full `multi_head_attention` function, chaining S1-T1. | AC1: Applies attention heads independently. AC2: Concatenates the outputs of all heads. AC3: Applies the final linear projection. | Section 3.2, Formula (2) |
-
-## Component & Dependency List
-
-| Component | Description | Dependencies |
+| Component | Description / Module | Required Libraries |
 | :--- | :--- | :--- |
-| **Core Utility** | Numerical processing and matrix algebra. | `numpy` |
-| **Attention Layer** | Implements `scaled_dot_product_attention`. | `numpy` |
-| **MultiHead Layer** | Orchestrates parallel attention heads. | `numpy` |
-| **Softmax Utility** | Stable implementation of softmax activation. | `numpy` |
+| **Core Utility** | Numerical array manipulation and matrix algebra. | `numpy` |
+| **Attention Core** | `scaled_dot_product_attention` function implementation. | `numpy` |
+| **MultiHead Layer** | Orchestration of parallel attention heads. | `numpy` |
+| **Tests** | Validation suite for all numerical components. | `numpy`, `unittest` / standard testing framework |
 
-**Required Technology Stack:** Python 3.x, NumPy
+## 4. Documentation and Code Standards
 
-## Tests
-All unit tests will reside in the `tests/` directory and will use standard Python libraries for assertion (e.g., `unittest` or equivalent simple assertions).
+*   **Code Style:** All Python code must strictly adhere to **PEP 8 standards**.
+*   **Documentation:** All public functions must have clear **Google or NumPy style docstrings** detailing parameters, return values, and exceptions, describing *what* the function does based on the paper's methodology.
+
+## 5. Verification Checklist Cross-Reference
+
+**(See table in Section 2. All checklist items are mapped to a task.)**
+*   V1, V2, V3, V4 are covered by S1-T1 and S1-T2.
+*   V5, V6, V7 are covered by S2-T1 and S2-T2.
+*   V8, V9 are covered by future S3 and S4 tasks.
+
+---
+**COMMIT LOG:**
+*   S1-T1: Created `src/attention.py`.
+*   S1-T2: Created `tests/test_attention.py`.
+*   Blueprint Update: Updated this file to reflect a plan based on "Attention Is All You Need" and document S1 completion.
