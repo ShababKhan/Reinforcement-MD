@@ -11,10 +11,12 @@ The core idea of rMD is to combine molecular dynamics (MD) trajectory data and f
 ### Sprint 1: Data Simulation & Core Autoencoder (Basic)
 
 #### Task 1.1: Generate Synthetic/Mock Input Data
-- **Description:** Implemented `generate_mock_data.py` to create synthetic `input_coords` (representing flattened Cartesian coordinates of protein structures, shape: 10,000x9696) and `cv_coords` (representing 3-dimensional collective variable data, shape: 10,000x3). This script generates random float values between 0 and 1 for both datasets, serving as mock inputs for training the autoencoder. This directly corresponds to the necessity for input data from MD simulations and associated collective variables, as described in the paper's "Informed autoencoder network" section and Figure S2, before the autoencoder training can commence.
+- **Description:** Implemented `generate_mock_data.py` to create synthetic `input_coords` (representing flattened Cartesian coordinates of protein structures, shape: 10,000x9696) and `cv_coords` (representing 3-dimensional collective variable data, shape: 10,000x3). This script generates random float values within plausible ranges, serving as mock inputs for training the autoencoder. This directly corresponds to the necessity for input data from MD simulations and associated collective variables, as described in the paper's "Informed autoencoder network" section and Figure S2, before the autoencoder training can commence.
+- **Deliverables:** `generate_mock_data.py` and `tests/test_generate_mock_data.py` (unit tests verifying shapes, data types, and value ranges).
 
 #### Task 1.2: Implement `rmsd_loss` Function (Loss2)
 - **Description:** Developed `src/losses/rmsd_loss.py`, which contains the `rmsd_loss` function. This PyTorch-based function calculates a Root Mean Square Deviation (RMSD)-like metric between two sets of flattened Cartesian coordinates. It serves as the `Loss2` function for the autoencoder, minimizing the structural superposition error between input and reconstructed protein structures, as detailed in the paper's "Informed autoencoder network" section and Figure 2. The implementation assumes pre-aligned structures, consistent with the paper's methodology of superposing trajectory frames prior to network training.
+
 
 ## Project Structure
 
@@ -35,7 +37,11 @@ The core idea of rMD is to combine molecular dynamics (MD) trajectory data and f
 │       └── basic_trainer.py
 └── tests/
     ├── __init__.py
-    └── test_generate_mock_data.py
+    ├── test_generate_mock_data.py
+    ├── test_autoencoder.py
+    ├── test_cv_calculations.py
+    ├── test_data_processing.py
+    └── test_rmsd_loss.py
 ```
 
 ## Setup and Installation
@@ -53,7 +59,6 @@ The core idea of rMD is to combine molecular dynamics (MD) trajectory data and f
     git clone https://github.com/ShababKhan/Reinforcement-MD.git
     cd Reinforcement-MD
     ```
-
 2.  **Create a Virtual Environment (Recommended):**
     ```bash
     python -m venv venv
@@ -62,7 +67,6 @@ The core idea of rMD is to combine molecular dynamics (MD) trajectory data and f
     # On Windows
     .\venv\Scripts\activate
     ```
-
 3.  **Install Dependencies:**
     ```bash
     pip install -r requirements.txt
