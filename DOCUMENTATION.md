@@ -1,45 +1,33 @@
-# Documentation for Reinforced Molecular Dynamics (rMD) Replication
+# rMD Project Master Documentation
 
-This document serves as the central guide for the development, implementation, and validation of the rMD software based on Kolossváry and Coffey's preprint.
-
-**Code Standard:** All Python source code must adhere strictly to **PEP 8** style guidelines.
-
-## Introduction
-
-*   **Goal:** To develop a modular, physics-infused generative model (Informed Autoencoder) capable of efficiently exploring the conformational space of Cereblon (CRBN) using pre-calculated Free Energy information.
-*   **Reference:** Reinforce molecular dynamics: Physics-infused generative machine learning model explores CRBN activation process. **(Cite DOI upon publication)**
+This document charts the implementation progress, linking the scientific methodologies described in the Kolossváry & Coffey bioRxiv preprint to the developed Python modules.
 
 ## Methodology
 
-*   **Architecture Overview:** Describe the Encoder, 3D Latent Space, Decoder, and the butterfly analogy (Fig. 2/S2).
-*   **Loss Functions Detail:**
-    *   **Loss 2 (Prediction Loss):** $\mathcal{L}_2$. Measures RMSD/MAE between input structure $X$ and output $\hat{X}$.
-    *   **Loss 1 (Latent Loss):** $\mathcal{L}_1$. Measures correlation/distance between Latent Coordinates $L$ and Collective Variable Coordinates $CV$.
-*   **Training Strategy:** Simultaneous optimization: $\text{Loss}_{\text{Total}} = \alpha \mathcal{L}_1 + \mathcal{L}_2$. (Note: $\alpha$ weight must be determined by testing to tune reconstruction vs. physics fidelity).
-*   **CRBN Specifics:** Input vectors are 9696-dimensional (CRBN heavy atoms). Latent space is 3D. Activation is Swish.
+The core of the Reinforced Molecular Dynamics (rMD) approach centers on training an **Informed Autoencoder** that uses a physics-based constraint ($\mathcal{L}_1$) in addition to the standard structural reconstruction constraint ($\mathcal{L}_2$).
 
-## Dependencies
+| Component Implemented | Paper Reference | Implementation Detail | Source File |
+| :--- | :--- | :--- | :--- |
+| **Data Preparation** | *"...all protein structures were superposed to the first frame..."* (Para. 10, Informed AE Network) | Implemented `superpose_structures` to enforce a reference frame alignment for the 9696-dimensional heavy atom input vectors. | `src/data_utils.py` |
+| **Informed Autoencoder Architecture** | Figure 2, Figure S2, *"...element-wise activation layer using the 'Swish' form..."* | Implemented a symmetric Encoder/Decoder structure (`InformedAutoencoder`) with an intermediate 3D Latent Space (LS) and mandated Swish activation functions across hidden layers. | `src/model_architecture.py` |
+| **$\mathcal{L}_2$ (Prediction Loss)** | Loss2 function; minimizing average RMSD (Para. 8, Figure 2) | Implemented as Mean Squared Error (MSE) over the input/output coordinates in `calculate_loss2_rmsd`. | `src/losses.py` |
+| **$\mathcal{L}_1$ (Latent Loss)** | Loss1 function; LS coordinates $\rightarrow$ CV coordinates (Para. 10, Figure 2) | Implemented as MSE between latent space output and target CV coordinates in `calculate_loss1_latent_cv_rmsd`. This injects the physical context. | `src/losses.py` |
+| **Dual-Loss Training** | *"...simultaneously optimizing Loss1 and Loss2, e.g., using a weighted sum..."* | Implemented `DualLoss` class to calculate $\alpha \mathcal{L}_1 + \mathcal{L}_2$. The `train_r_model` script uses the Adam optimizer for 10,000 rounds, batch size 64. | `src/train.py` |
 
-*   **Python Version:** X.X.X
-*   **Key Libraries:**
-    *   NumPy: [Version]
-    *   PyTorch/TensorFlow: [Version]
-    *   SciPy: [Version]
-    *   MDAnalysis: [Version]
-*   **External Requirements (For Full Replication):** Access to the initial MD simulation data set (10,000 frames with corresponding CV values) and the 3D Free Energy Map structure. Output post-processing requires external tools (Rosetta/Pymol - to be addressed in Phase 2).
+## Sprint 1 Deliverables Summary
+- **Status:** Complete.
+- **Artifacts:** `src/data_utils.py`, `src/model_architecture.py`, `src/losses.py`, `src/train.py`, `tests/test_s1_core.py`.
 
-## Tests
+## Next Steps (Sprint 2)
+The focus shifts to using the trained model to generate the transition path as described in **Figure 4** of the paper.
 
-*   **Unit Tests:** Details of tests covering data preprocessing (superposition, flattening) and loss function calculations.
-*   **Integration Tests (Convergence):** Expected final loss values from training runs: $\mathcal{L}_1 \approx 1.0, \mathcal{L}_2 \approx 1.6$.
-*   **Validation Tests (Fidelity & Physics):**
-    *   Fidelity Test: RMSD verification of structures generated from known LS points ($\approx 1.2 \text{ Å}$).
-    *   Physics Test: Verification that structures generated from FE map regions map to known open/closed states correctly (Fig. 3/4 alignment).
-*   **Path Generation Test:** Confirmation that the B-spline derived structures smoothly transition between the Open (6H0F) and Closed (6H0G) reference states.
+### Sprint 2 Tasks (Advanced Functionality & Path Generation)
 
-## Glossary
+| Task ID | User Story | Acceptance Criteria (AC) | Status |
+| :--- | :--- | :--- | :--- |
+| **S2.T1** | Implement B-Spline Path Generation Utility | AC 1.1: Function accepts anchor CV points and generates a set of intermediate points along the fitted B-spline path (mimicking Fig. 4 blue curve). | To Do |
+| **S2.T2** | Implement Structure Generation Endpoint (CV $\rightarrow$ Structure) | AC 2.1: A public function exists to use the trained model to generate a full atomic structure from candidate CV coordinates. | To Do |
+| **S2.T3** | Execute Full Transition Path Generation | AC 3.1: Run the path generated in S2.T1 through the trained model to produce the full set of transition structures. | To Do |
+| **S2.P1** | Final Documentation & External Tool Noting | AC 5.1: `DOCUMENTATION.md` is finalized. AC 5.2: Clear dependency instructions are added for the external post-processing steps (Rosetta/Pymol). | To Do |
 
-*   **CV:** Collective Variable(s) (3D space).
-*   **LS:** Latent Space (3D representation learned by the Encoder).
-*   **FE Map:** Free Energy Map defined over the CV space.
-*   **rMD:** Reinforced Molecular Dynamics.
+**Action Required:** Software Developer Agent to commence work on **S2.T1** and **S2.T2**. QA Engineer to prepare tests for path generation logic.
