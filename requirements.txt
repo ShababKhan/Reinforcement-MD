@@ -1,0 +1,10 @@
+# Dependencies for Reinforced Molecular Dynamics (rMD) Reproduction
+
+# Core Frameworks
+torch # For autoencoder implementation
+numpy
+scipy # For math, B-spline fitting
+
+# Optional/Future (For MD data manipulation, if raw data needs parsing)
+# mdanalysis
+# pandas
