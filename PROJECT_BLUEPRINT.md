@@ -1,47 +1,59 @@
-# Project Blueprint: Replicating Core Transformer Components
+# Project Blueprint: Reinforced Molecular Dynamics (rMD) Replication
 
-**Reference Paper:** "Attention Is All You Need" (Vaswani et al., 2017)
-**Technology Stack:** Python 3.x, NumPy (Primary Dependency)
-**PEP 8 Compliance:** Mandatory for all code developed.
+**Scientific Paper:** Reinforce molecular dynamics: Physics-infused generative machine learning model explores CRBN activation process (Kolossváry, Coffey, bioRxiv pre-print)
 
-## 1. Methodology Summary
+## Introduction
 
-The project aims to recreate the core numerical components of the Transformer architecture. The foundational scientific principle is the Scaled Dot-Product Attention mechanism, which weights the importance of different parts of the input sequence based on their dot product similarity to a query. This functionality must be implemented with high numerical precision appropriate for deep learning frameworks, using NumPy for matrix operations.
+This document outlines the plan to replicate the Reinforced Molecular Dynamics (rMD) methodology, focusing on building the informed autoencoder structure and the associated data processing pipeline necessary to model the CRBN open-to-closed conformational transition based on pre-computed free energy data.
 
-## 2. Agile Project Plan (Tasks & Sprints)
+## Methodology
 
-| Sprint | Task ID | Task Description / User Story | Acceptance Criteria (AC) | Paper Mapping | Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **1** | S1-T1 | Implement the core `scaled_dot_product_attention(Q, K, V)` function. | AC1: Function accepts Q, K, V tensors. AC2: Correctly computes $QK^T$ and scales by $\frac{1}{\sqrt{d_k}}$. AC3: Applies row-wise Softmax. AC4: Multiplies result by V. | V1, V2, V3 | **COMPLETED** |
-| **1** | S1-T2 | Implement unit tests for `scaled_dot_product_attention`. | AC1: Tests cover general tensor shape preservation. AC2: Tests verify scaling factor application. AC3: Assert correctness against known theoretical result within tolerance. | V4 | **COMPLETED** |
-| **2** | S2-T1 | Implement the linear projection/splitting logic for MultiHeadAttention. | AC1: Implement the initial linear projection $W^Q, W^K, W^V$ logic (conceptual split for single-function integration). AC2: Ensure output shapes are correct for $h$ heads. | V5 | *PENDING* |
-| **2** | S2-T2 | Implement the head concatenation and final output projection ($W^O$). | AC1: Concatenate results from all attention heads. AC2: Apply final linear projection $W^O$. | V6, V7 | *PENDING* |
-| **3** | S3-T1 | Implement the full Transformer Encoder Layer structure. | AC1: Integrate MultiHeadAttention (S2 tasks). AC2: Implement Residual Connections (Add & Norm). AC3: Implement Position-wise Feed-Forward Network (FFN). | V8 | *PENDING* |
-| **4** | S4-T1 | Implement Positional Encoding generator function. | AC1: Implement the sinusoidal formula PE formula. AC2: Function returns a matrix of shape (sequence\_length, model\_dimension). | V9 | *PENDING* |
+*   **Core Principle:** Implementation of a dual-loss autoencoder linking latent space to Collective Variable (CV) space using a Free Energy (FE) map derived from advanced MD.
+*   **Architecture:** Custom Encoder-Decoder chain with fully connected layers matching the structure implied by Fig. S2 and Fig. 2.
+    *   **Encoder:** Flattens Cartesian coordinates -> Gradually shrinking hidden layers -> 3D Latent Space (LS).
+    *   **Decoder:** 3D LS -> Gradually expanding hidden layers -> Reconstructed Cartesian Coordinates.
+*   **Loss Functions:**
+    1.  **Loss 2 (`predLoss`):** Standard reconstruction loss (e.g., MAE/RMSD) between input structure and decoded output structure. **Goal:** Structure fidelity.
+    2.  **Loss 1 (`latentLoss`):** A mapping loss between the latent space (LS) coordinates output by the encoder and the corresponding CV coordinates from the simulation metadata. **Goal:** Inject physical context.
+*   **Optimization:** Simultaneous optimization of $\text{Loss}_1$ and $\text{Loss}_2$ (weighted sum).
+*   **Generation:** Sampling coordinates from the FE map (which lives in the CV space), mapping them to the LS, and decoding to full structures.
+*   **Path Generation:** Fitting a B-spline to anchor CV points and feeding the points along the spline to the decoder.
+*   **Code Standard:** All Python code must strictly adhere to **PEP 8** style guidelines.
 
-## 3. Component & Dependency List
+## Technology Stack & Dependencies
 
-| Component | Description / Module | Required Libraries |
-| :--- | :--- | :--- |
-| **Core Utility** | Numerical array manipulation and matrix algebra. | `numpy` |
-| **Attention Core** | `scaled_dot_product_attention` function implementation. | `numpy` |
-| **MultiHead Layer** | Orchestration of parallel attention heads. | `numpy` |
-| **Tests** | Validation suite for all numerical components. | `numpy`, `unittest` / standard testing framework |
+| Category | Component | Required Libraries/Software | Notes |
+| :--- | :--- | :--- | :--- |
+| **Core Environment** | Implementation Language | **Python** | Must adhere to PEP 8. |
+| **Machine Learning**| Autoencoder Implementation | PyTorch (Recommended) or TensorFlow | |
+| **Numerical/Data** | Array manipulation/Handling simulation data | NumPy | Essential for handling Cartesian coordinates and vector operations. |
+| **Structural Prep** | Structure Superposition | MDAnalysis (or similar) | Needed for frame alignment/superposition. |
+| **Path Fitting** | B-Spline Fitting | SciPy (or specific spline library) | For fitting the path through anchor CV points. |
+| **Utilities** | Plotting/Visualization | Matplotlib | For replicating figures like Fig 2, 3, and 4. |
 
-## 4. Documentation and Code Standards
+## Extrapolated Work: CRBN Specifics & Inputs
 
-*   **Code Style:** All Python code must strictly adhere to **PEP 8 standards**.
-*   **Documentation:** All public functions must have clear **Google or NumPy style docstrings** detailing parameters, return values, and exceptions, describing *what* the function does based on the paper's methodology.
+*   **Input Data Structure:** Length 9696 vectors (Flattened heavy atom coordinates for CRBN only, as DDB1 motion was negligible).
+*   **Latent Space Dimension:** 3 dimensions (matching $\text{CV}_1, \text{CV}_2, \text{CV}_3$ from Fig. 3).
+*   **Activation Function:** Swish ($x\sigma(x)$) for all linear layers except the LS layer.
+*   **Optimizer:** Adam (as used in the original paper).
+*   **Training Parameters:** 10,000 rounds, Batch Size 64.
+*   **Pre-processing:** Input structure superposition must be performed relative to an initial frame.
+*   **Post-Processing Note:** Rosetta/Rosie server integration is **SCOPE-OUT** for the initial software replication, but the Python module must include a function to handle the *output* structure cleaning steps and document the expected inputs for external tools.
 
-## 5. Verification Checklist Cross-Reference
+## Agile Project Plan Summary
 
-**(See table in Section 2. All checklist items are mapped to a task.)**
-*   V1, V2, V3, V4 are covered by S1-T1 and S1-T2.
-*   V5, V6, V7 are covered by S2-T1 and S2-T2.
-*   V8, V9 are covered by future S3 and S4 tasks.
+*   **Sprint 1:** Core ML Model Implementation (Data Prep, Network Architecture, Dual-Loss Training up to loss convergence).
+*   **Sprint 2:** Advanced Features & Verification (Structure Generation, B-Spline Path Sampling, Final Validation).
+
+## Tests
+
+*   **Unit Tests:** Verify correctness of data loading, coordinate flattening/unflattening, and ensemble superposition.
+*   **Integration Test 1 (Loss Calculation):** Verify $\text{Loss}_1$ and $\text{Loss}_2$ calculate correctly according to the described geometry and loss functions.
+*   **Integration Test 2 (Trained Convergence):** Verify that after training, Loss 1 approaches $\approx 1.0$ and Loss 2 approaches $\approx 1.6$ (Å RMSD).
+*   **Validation Test (Structural Fidelity):** Validate that structures generated from coordinates *within the training distribution* of the LS yield an average all-heavy-atom RMSD of $\approx 1.2\text{ Å}$ or better against their true corresponding MD frames.
+*   **Validation Test (Physical Correlation):** Verify that structures generated by sampling the FE map (in CV space) populate regions corresponding to the known low-energy areas (Green in Fig. 3).
 
 ---
-**COMMIT LOG:**
-*   S1-T1: Created `src/attention.py`.
-*   S1-T2: Created `tests/test_attention.py`.
-*   Blueprint Update: Updated this file to reflect a plan based on "Attention Is All You Need" and document S1 completion.
+
+*Self-Correction Check: All scientific elements mapped to tasks (M1-M13, F1-F4, S1-S2) are covered in the Agile Plan.*
